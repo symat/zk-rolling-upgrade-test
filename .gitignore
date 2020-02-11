@@ -1,4 +1,5 @@
 .idea
-apache-zookeeper-*.tar.gz
+apache-zookeeper-*
 cli_log_*
 __pycache__
+*.pyc
