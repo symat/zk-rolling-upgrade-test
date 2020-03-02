@@ -47,3 +47,7 @@ You can find under `WORKDIR` a subfolder for each server instance with:
 **fine tuning:**
 - change the log settings in the log4j.properties file
 - change the config in: zoo.cfg.template
+
+**license:**
+
+The good old Apache License 2.0.
