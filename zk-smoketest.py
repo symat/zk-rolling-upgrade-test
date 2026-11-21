@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 
 # Licensed to the Apache Software Foundation (ASF) under one
 # or more contributor license agreements.  See the NOTICE file
@@ -116,7 +116,7 @@ if __name__ == '__main__':
     # create znodes, one znode per session (client), one session per server
     for i, server in enumerate(servers):
         # ensure this server is up to date with leader
-        sessions[i].async()
+        sessions[i].sync()
 
         ## create child znode
         sessions[i].create(child_path(i), "", zookeeper.EPHEMERAL)
@@ -124,7 +124,7 @@ if __name__ == '__main__':
     watchers = []
     for i, server in enumerate(servers):
         # ensure this server is up to date with leader
-        sessions[i].async()
+        sessions[i].sync()
 
         children = sessions[i].get_children(rootpath)
         if len(children) != len(sessions):
@@ -142,7 +142,7 @@ if __name__ == '__main__':
     # check all watches fired
     for i, watcher in enumerate(watchers):
         # ensure this server is up to date with leader
-        sessions[i].async()
+        sessions[i].sync()
         if watcher.waitForExpected(len(sessions), options.timeout) != len(sessions):
             raise SmokeError("server %s wrong number of watches: %d" %
                              (server, watcher.count))
@@ -155,7 +155,7 @@ if __name__ == '__main__':
     # cleanup root node
     zk = ZKClient(servers[-1], options.timeout)
     # ensure this server is up to date with leader (ephems)
-    zk.async()
+    zk.sync()
     zk.delete(rootpath)
 
     zk.close()
